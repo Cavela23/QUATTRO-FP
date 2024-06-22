@@ -16,3 +16,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+use App\Http\Controllers\OAuthController; 
+
+use App\Http\Controllers\PaymentController;
+
+//routing untuk callback setelah redirect
+Route::get('/auth/google/callback', [OAuthController::class, 'callback']);
+
+//Routing pembayaran menggunakan midtrans
+Route::post('/payment/webhook', [PaymentController::class, 'handleWebhook']);
+Route::post('/create-transaction', [PaymentController::class, 'createTransaction']);
+Route::post('/midtrans-notification', [PaymentController::class, 'handleWebhook']);
+
